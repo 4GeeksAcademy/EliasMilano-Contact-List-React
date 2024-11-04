@@ -35,7 +35,7 @@ const injectContext = PassedComponent => {
 			state.actions.createFirstsContacts();
 			setInterval(() => {
 				state.actions.getContacts();
-		  	}, 1000);
+		  	}, 700);
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

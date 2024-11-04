@@ -72,10 +72,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: myHeaders,
 						body: JSON.stringify(
 							{
-								name: "Neo2",
-								phone: "096545123",
-								email: "theone@zion.com",
+								name: "Trinity",
+								phone: "098989454",
+								email: "thetrinity@zion.com",
 								address: "15th Ave 201"
+							}
+						)
+					})
+					const resp3 = await fetch(process.env.BACKEND_URL + "agendas/morpheus/contacts", {  // Process permite acceder a las variables de entorno en .env
+						method: "POST",
+						headers: myHeaders,
+						body: JSON.stringify(
+							{
+								name: "The Oracle",
+								phone: "000000000",
+								email: "oracle@matrix.com",
+								address: "???????"
 							}
 						)
 					})
@@ -102,7 +114,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (resp.ok) {
 					await getActions().getContacts();
 				}
-			}
+			},
+
+			// función para eliminar contactos
+			deleteContact: async (contact_id) => {
+				const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contact_id}`, {
+					method: "DELETE",
+				});
+				if (resp.ok) {
+					await getActions().getContacts()
+				}
+			},
+
+
+
 		}
 	};
 };
