@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			contacts: []
+			contacts: [
+			]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -40,6 +41,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 
+			// función para crear una agenda de contactos inicial en la DB
+			createAgenda: () => {
+				const myHeaders = new Headers();
+				const resp = fetch(process.env.BACKEND_URL + "agendas/morpheus", {  // Process permite acceder a las variables de entorno en .env
+					method: "POST",
+				}) 
+			},
+			// función para crear 3 contactos iniciales en la DB
+			createFirstsContacts: async () => {
+				const response = await fetch(process.env.BACKEND_URL + "agendas/morpheus/") 
+				const data = await response.json();
+				if (data.contacts == "") {
+					const myHeaders = new Headers();
+					myHeaders.append("Content-Type", "application/json");
+					const resp1 = await fetch(process.env.BACKEND_URL + "agendas/morpheus/contacts", {  // Process permite acceder a las variables de entorno en .env
+						method: "POST",
+						headers: myHeaders,
+						body: JSON.stringify(
+							{
+								name: "Neo",
+								phone: "096545123",
+								email: "theone@zion.com",
+								address: "15th Ave 201"
+							}
+						)
+					})
+					const resp2 = await fetch(process.env.BACKEND_URL + "agendas/morpheus/contacts", {  // Process permite acceder a las variables de entorno en .env
+						method: "POST",
+						headers: myHeaders,
+						body: JSON.stringify(
+							{
+								name: "Neo2",
+								phone: "096545123",
+								email: "theone@zion.com",
+								address: "15th Ave 201"
+							}
+						)
+					})
+				}
+			}, 
+
 			// función para importar contactos
 			getContacts: async () => {
 				const resp = await fetch(process.env.BACKEND_URL + "agendas/morpheus/") 
@@ -52,12 +94,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			createContact: async (newContact) => {
 				const myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
-				const resp = await fetch(process.env.BACKEND_URL + "agendas/morpheus/contacts", {
+				const resp = await fetch(process.env.BACKEND_URL + "agendas/morpheus/contacts", {  // Process permite acceder a las variables de entorno en .env
 					method: "POST",
 					headers: myHeaders,
 					body: JSON.stringify(newContact)
 				}) 
-					// Process permite acceder a las variables de entorno en .env
 				if (resp.ok) {
 					await getActions().getContacts();
 				}

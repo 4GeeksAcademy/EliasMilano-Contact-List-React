@@ -31,6 +31,7 @@ export const CreateContact = () => {
             <button onClick={async() => {
                 await actions.createContact(newContact)
                 navigate("/") // nos devuelve a la vista Home una vez quede creado un contacto nuevo. También se puede usar -1 sin comillas.
+                              // hay que importarlo desde "react-router-dom"              
                 }} type="submit" className="btn btn-primary w-100">Submit</button>
 
             <div className="ml-auto">
