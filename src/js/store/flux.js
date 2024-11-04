@@ -126,6 +126,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// función para editar contactos
+			//editContact: async (contact_id) => {
+			//	const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contact_id}`, {
+			//		method: "PUT",
+			//	}) 
+			//	if (resp.ok) {
+			//		await getActions().getContacts();
+			//	}
+			//},
+
 
 
 		}
