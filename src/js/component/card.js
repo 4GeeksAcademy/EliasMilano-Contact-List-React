@@ -28,16 +28,15 @@ export const ContactCard = (props) => {
                 <div className="col-md-6">
                     <div className="card-body">
                         <h5 className="card-title">{props.name}</h5>
-                        <p className="card-text"><i class="fa-solid fa-location-dot"></i> {props.address}</p>
-                        <p className="card-text"><i class="fa-solid fa-phone"></i><small className="text-body-secondary"> {props.phone}</small></p>
-                        <p className="card-text"><i class="fa-solid fa-envelope"></i><small className="text-body-secondary"> {props.email}</small></p>
+                        <p className="card-text"><i className="fa-solid fa-location-dot"></i> {props.address}</p>
+                        <p className="card-text"><i className="fa-solid fa-phone"></i><small className="text-body-secondary"> {props.phone}</small></p>
+                        <p className="card-text"><i className="fa-solid fa-envelope"></i><small className="text-body-secondary"> {props.email}</small></p>
                     </div>
                 </div>
                 <div className="col-md-1">
                     <div className="card-body">
                         <i className="fa-solid fa-pen-to-square" title="Edit contact"
-                            //onClick={async() => {await navigate("/edit")
-                            //}}
+                            onClick={() => navigate("/edit/" + props.id)}
                         />
                     </div>
                 </div>

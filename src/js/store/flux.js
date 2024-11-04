@@ -98,10 +98,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getContacts: async () => {
 				const resp = await fetch(process.env.BACKEND_URL + "agendas/morpheus/") 
 					// Process permite acceder a las variables de entorno en .env
+					if (!resp.ok) {
+						await getActions().createAgenda()
+						await getActions().createFirstsContacts()
+					}
 				const data = await resp.json();
 				console.log(data);
 				setStore({contacts: data.contacts}) // esto permite actualizar los contactos
 			},
+
 			// función para enviar nuevos contactos creados a la DB
 			createContact: async (newContact) => {
 				const myHeaders = new Headers();
@@ -117,8 +122,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			// función para eliminar contactos
-			deleteContact: async (contact_id) => {
-				const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contact_id}`, {
+			deleteContact: async (contactId) => {
+				const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contactId}`, {
 					method: "DELETE",
 				});
 				if (resp.ok) {
@@ -127,15 +132,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			// función para editar contactos
-			//editContact: async (contact_id) => {
-			//	const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contact_id}`, {
-			//		method: "PUT",
-			//	}) 
-			//	if (resp.ok) {
-			//		await getActions().getContacts();
-			//	}
-			//},
-
+			editContact: async (contactId, updatedContact) => {
+				const myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+				const resp = await fetch(process.env.BACKEND_URL + `agendas/morpheus/contacts/${contactId}`, {
+					method: "PUT",
+					headers: myHeaders,
+					body: JSON.stringify(updatedContact)
+				}); 
+				if (resp.ok) {
+					await getActions().getContacts();
+				}
+			},
 
 
 		}

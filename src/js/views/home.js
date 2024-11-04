@@ -14,7 +14,7 @@ export const Home = () => {
 	return (
 		<div className="container d-flex flex-column justify-content-center mt-5">
 			{
-				store.contacts.map((item, index) => {
+				store.contacts && store.contacts.map((item, index) => {
 					return <ContactCard key={index} name={item.name} email={item.email} phone={item.phone} address={item.address} id={item.id}/>
 				})
 			}

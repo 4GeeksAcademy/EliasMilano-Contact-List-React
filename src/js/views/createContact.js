@@ -3,12 +3,17 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useActionData } from "react-router";
 import { Context } from "../store/appContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 
-export const CreateContact = () => {
+export const CreateContact = (props) => {
     const {actions} = useContext(Context);
     const navigate = useNavigate();
     const [newContact, setNewContact] = useState({});
+    const {id} = useParams();
+
+    let urlLocation = useLocation().pathname;
+    console.log(urlLocation);
+    
     return (
         <div className="mt-5 px-5" style={{"width": "550px"}}>
             <div className="mb-3">
@@ -28,8 +33,7 @@ export const CreateContact = () => {
                 <input onChange={(evento) => setNewContact({...newContact, address:evento.target.value})} value={newContact.address || ""} type="text" className="form-control bg-black text-success" placeholder="Enter address" />
             </div>
 
-            <button onClick={async() => {
-                await actions.createContact(newContact)
+            <button onClick={ async() => { (urlLocation == "/create") ? await actions.createContact(newContact) : await actions.editContact(id, newContact)
                 navigate("/") // nos devuelve a la vista Home una vez quede creado un contacto nuevo. También se puede usar -1 sin comillas.
                               // hay que importarlo desde "react-router-dom"              
                 }} type="submit" className="mt-3 btn btn-success text-black w-100">Submit</button>
